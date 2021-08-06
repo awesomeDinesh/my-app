@@ -16,6 +16,15 @@ node {
     }
   }
   
+  stage('QualityGate Status'){
+    timeout(time: 1,unit: 'HOURS'){
+      def qg = waitForQualityGate()
+      if (qg.status != 'OK'){
+        error "Pipeline aborted due to Quality Gate failed ${qg.status}"
+      }
+    }
+  }
+  
   stage('Email Notifications'){
     mail bcc: '', 
     body: '''Hello Dinesh,
