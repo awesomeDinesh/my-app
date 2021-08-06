@@ -16,12 +16,9 @@ node {
     }
   }
   
-  stage('QualityGate Status'){
-    timeout(time: 1, unit: 'HOURS'){
-      def qualitygate = waitForQualityGate()
-      if (qualitygate.status != "OK"){
-        error "Pipeline aborted due to Quality Gate failure: ${qualitygate.status}"
-      }
+  stage('Deploy on Tomcat'){
+    sshagent(['tomcat-dev']) {
+      sh 'scp -o StrictHostKeyChecking=no /target/*.war ec2-user@54.190.31.42:/opt/apache-tomcat-9.0.50/webapps'
     }
   }
   
