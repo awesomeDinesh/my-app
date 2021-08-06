@@ -1,7 +1,8 @@
+properties([parameters([choice(choices: 'main\nmaster\nfeature-1', description: 'Select branch to build', name: 'branch')])])
+
 node {
   stage('SCM Checkout'){ 
-    git url: 'https://github.com/awesomeDinesh/my-app', branch: 'main'
-  }
+    git url: 'https://github.com/awesomeDinesh/my-app', branch: "${params.branch}"
   stage('Compile-Package'){
     def mvnHome = tool name: 'maven-3', type: 'maven'
     sh "$mvnHome/bin/mvn package"    
