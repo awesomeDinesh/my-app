@@ -11,7 +11,7 @@ node {
   
   stage('SonarQube-Analysis'){
     def mvnHome = tool name: 'maven-3', type: 'maven'
-    withSonarQubeEnv('Server Auth. Token'){
+    withSonarQubeEnv('sonar-8'){
     sh "$mvnHome/bin/mvn sonar:sonar"    
     }
   }
