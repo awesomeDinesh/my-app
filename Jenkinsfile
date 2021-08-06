@@ -8,13 +8,7 @@ node {
     def mvnHome = tool name: 'maven-3', type: 'maven'
     sh "$mvnHome/bin/mvn package"    
   }
-  
-  stage('SonarQube-Analysis'){
-    def mvnHome = tool name: 'maven-3', type: 'maven'
-    withSonarQubeEnv('sonar-8'){
-    sh "$mvnHome/bin/mvn clean package sonar:sonar"    
-    }
-  }
+ 
   
   stage('Deploy on Tomcat'){
     sshagent(['tomcat-dev']) {
